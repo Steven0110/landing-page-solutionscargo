@@ -10,8 +10,15 @@ import { Formik, Form, ErrorMessage } from 'formik';
 
 export default function Banner() {
 
-	function validateForm(values: array) {
-		const errors = {}
+	interface Values {
+		name: string,
+		email: string,
+		phone: string|number,
+		message: string,
+	}
+
+	function validateForm(values: Values) {
+		const errors: Values = {name: '', email: '', phone: '', message: ''}
 
 		if( !values.email )
 			errors.email = 'El correo eletrónico es requerido'
@@ -24,7 +31,7 @@ export default function Banner() {
 		return errors
 	}
 
-	function submitForm(values: array, { setSubmitting }) {
+	function submitForm(values: Values, { setSubmitting }: { setSubmitting: Function } ) {
 		setTimeout(() => {
 			alert("Done")
 			setSubmitting( false )
@@ -75,7 +82,7 @@ export default function Banner() {
 							</label>
 							<label className="block form__block">
 								<span className="text-gray-700">Mensaje</span>
-								<InputTextarea className="block w-full" name="message" rows="4" value={values.message} onChange={ handleChange }/>
+								<InputTextarea className="block w-full" name="message" rows={4} value={values.message} onChange={ handleChange }/>
 								<ErrorMessage name="message" component="div" className="form__error"/>
 							</label>
 							<div className="mt-4">
