@@ -6,6 +6,11 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --primary-color: #2b313d;
+}
+
+button.p-button {
+  background: var(--primary-color);
 }
 
 @media (prefers-color-scheme: dark) {

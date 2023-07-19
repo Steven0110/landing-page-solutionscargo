@@ -1,0 +1,17 @@
+.form {
+	background-color: #ebebeb;
+	padding: 40px;
+	border-radius: 20px;
+	.form__block {
+		margin-top: 14px;
+		.form__error {
+			color: red;
+		}
+		span {
+			font-weight: 600;	
+		}
+		input, textarea {
+			border-radius: 20px;
+		}
+	}
+}
