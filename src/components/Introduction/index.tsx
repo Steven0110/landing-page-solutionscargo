@@ -12,7 +12,7 @@ export default function Introduction() {
 				<div className="introduction__paragraph mb-6 md:mb-12">
 					Somos una Agencia de Carga Internacional que te proporciona una Solución Integral para tus necesidades, teniendo todos los servicios incorporados para brindarte el concepto de una sola ventana para un mejor control
 				</div>
-				<div className="introduction__paragraph mb-6 md:mb-12">
+				<div className="introduction__paragraph mb-6 md:mb-24">
 					Contamos con <strong>15 años de experiencia</strong> y estamos enfocados en brindarte una Solución real en la transportación y logística para todas las empresas dedicadas a la importación y exportación de bienes.
 				</div>
 			</div>

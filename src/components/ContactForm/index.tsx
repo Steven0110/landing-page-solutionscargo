@@ -1,12 +1,14 @@
 'use client';
 
 import './ContactForm.scss'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { InputText } from 'primereact/inputtext'
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
 import { Formik, Form, ErrorMessage } from 'formik';
-
+import ReCAPTCHA from "react-google-recaptcha";
+//6LdSLEInAAAAAISqrVR02mwKnY31E-w_HhqZQ2VO
+//6LdSLEInAAAAAGyUSTG5WgA9hyGsjoPkuLcPiN2h
 export default function ContactForm() {
 
 	interface Values {
@@ -14,23 +16,31 @@ export default function ContactForm() {
 		email: string,
 		phone: string|number,
 		message: string,
+		captcha: string
 	}
 
+	const recaptchaRef = useRef(0)
+
 	function validateForm(values: Values) {
-		const errors: Values = {name: '', email: '', phone: '', message: ''}
+		//const errors: Values = {name: '', email: '', phone: '', message: '', captcha: ''}
+		const errors = {} as Values
+		let count: number = 0
 
 		if( !values.email )
-			errors.email = 'El correo electrónico es requerido'
+			errors.email = 'El correo electrónico es requerido', count++
 		else if( !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email) )
-			errors.email = 'El correo eletrónico es inválido'
+			errors.email = 'El correo eletrónico es inválido', count++
 		
 		if( !values.name )
-			errors.name = 'El nombre es requerido'
+			errors.name = 'El nombre es requerido', count++
 
 		if( !values.phone )
-			errors.phone = 'El teléfono es requerido'
+			errors.phone = 'El teléfono es requerido', count++
 
-		return errors
+		if( !recaptchaRef.current.getValue() )
+			errors.captcha = 'El captcha es requerido', count++
+		console.log( errors )
+		return count > 0 ? errors : false
 	}
 
 	function submitForm(values: Values, { setSubmitting }: { setSubmitting: Function } ) {
@@ -69,8 +79,14 @@ export default function ContactForm() {
 							<ErrorMessage name="message" component="div" className="form__error"/>
 						</label>
 						<div className="mt-4">
+							<ReCAPTCHA
+								sitekey="6LdSLEInAAAAAISqrVR02mwKnY31E-w_HhqZQ2VO"
+								name="captcha"
+								ref={recaptchaRef}>
+							</ReCAPTCHA>
+							{errors.captcha && <div className="form__error text-red-600">El captcha es requerido</div>}
 							<Button
-								className="w-full p-button-primary"
+								className="w-full p-button-primary mt-2"
 								disabled={ isSubmitting }
 								loading={ isSubmitting }
 								label="Enviar"/>
