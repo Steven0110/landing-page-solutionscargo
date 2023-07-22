@@ -85,18 +85,18 @@ export default function ContactForm() {
 							<InputTextarea className="block w-full" name="message" rows={4} value={values.message} onChange={ handleChange }/>
 							<ErrorMessage name="message" component="div" className="form__error"/>
 						</label>
-						<div className="mt-4">
+						<div className="mt-4 form__recaptcha">
 							<ReCAPTCHA
 								sitekey="6LdSLEInAAAAAISqrVR02mwKnY31E-w_HhqZQ2VO"
 								ref={assignRef}>
 							</ReCAPTCHA>
 							{errors.captcha && <div className="form__error text-red-600">El captcha es requerido</div>}
-							<Button
-								className="w-full p-button-primary mt-2"
-								disabled={ isSubmitting }
-								loading={ isSubmitting }
-								label="Enviar"/>
 						</div>
+						<Button
+							className="w-full p-button-primary mt-2"
+							disabled={ isSubmitting }
+							loading={ isSubmitting }
+							label="Enviar"/>
 					</Form>
 				)}
 			</Formik>

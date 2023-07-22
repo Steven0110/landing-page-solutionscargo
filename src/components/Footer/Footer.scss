@@ -8,3 +8,11 @@
 		font-weight: 600;
 	}
 }
+
+@media(max-width: 768px) {
+	.footer {
+		.footer__line {
+			font-size: 0.9rem;
+		}
+	}
+}
