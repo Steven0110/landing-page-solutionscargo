@@ -5,6 +5,7 @@ import { useState, useRef, useCallback } from 'react'
 import { InputText } from 'primereact/inputtext'
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
+import { Toast } from 'primereact/toast';
 import { Formik, Form, ErrorMessage } from 'formik';
 import ReCAPTCHA from "react-google-recaptcha";
 export default function ContactForm() {
@@ -17,11 +18,14 @@ export default function ContactForm() {
 		captcha: string
 	}
 
+	const [disabled, setDisabled] = useState<boolean>(false)
+
 	interface RecaptchaRefType {
 		getValue: () => string | null
 	}
 
 	const recaptchaRef = useRef<RecaptchaRefType | null>(null)
+	const toast = useRef<Toast>(null)
 
 	const assignRef = useCallback((ref: ReCAPTCHA | null) => {
 		recaptchaRef.current = ref as RecaptchaRefType | null;
@@ -52,13 +56,26 @@ export default function ContactForm() {
 
 	function submitForm(values: Values, { setSubmitting }: { setSubmitting: Function } ) {
 		setTimeout(() => {
-			alert("Done")
+			toast.current?.show({severity: 'success', summary: 'Ok', detail: 'Tu información se ha enviado correctamente'})
 			setSubmitting( false )
-		}, 2000)
+			setDisabled(true)
+		}, 2000)	
+
+		/*
+		const response = await fetch('https://public-api.solutionscargo.com.mx/save-landing-data', {
+			'method': 'GET',
+			'mode': 'cors',
+			'headers': {
+				'x-api-key': 'DcLfVaW0q38k0NoVygp8d2QuTYAiftz78kI1XfH1'
+			}
+		})
+		const result = await response.json()
+		console.log()*/
 	}
 
 	return (
 		<div className="px-4 md:px-28 py-0 md:py-40 relative">
+			<Toast ref={toast} position="center"/>	
 			<Formik
 				initialValues={{name: '', email: '', message: '', phone: '', captcha: ''}}
 				validate={ validateForm }
@@ -94,7 +111,7 @@ export default function ContactForm() {
 						</div>
 						<Button
 							className="w-full p-button-primary mt-2"
-							disabled={ isSubmitting }
+							disabled={ isSubmitting || disabled }
 							loading={ isSubmitting }
 							label="Enviar"/>
 					</Form>
