@@ -7,7 +7,7 @@ export default function Social() {
 	return (
 		<div className="social py-8 md:py-16 px-8 md:px-64">
 			<div className="social__title text-center mb-4 md:mb-6">Síguenos en nuestras redes sociales</div>
-			<div className="social__text text-center mb-8 md:mb-24">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus tempora beatae eos perspiciatis mollitia odit impedit animi, optio. Doloremque ipsam quas cumque, nostrum. Amet corrupti magnam recusandae alias sit nostrum!</div>
+			<div className="social__text text-center mb-8 md:mb-24">¡Estamos emocionados de conectarnos contigo y crecer juntos en este apasionante mundo del comercio nacional, internacional y transporte de alimentos perecederos!</div>
 			<div className="social__icons">
 				<Link href="https://www.linkedin.com/company/solutions-cargo-s-a-de-c-v/about/" className="social__icon ml" target="_blank">
 					<i className="pi pi-linkedin text-5xl md:text-6xl mx-2 md:mx-8"></i>
