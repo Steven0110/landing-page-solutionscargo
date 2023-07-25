@@ -55,22 +55,34 @@ export default function ContactForm() {
 	}
 
 	function submitForm(values: Values, { setSubmitting }: { setSubmitting: Function } ) {
-		setTimeout(() => {
-			toast.current?.show({severity: 'success', summary: 'Ok', detail: 'Tu información se ha enviado correctamente'})
-			setSubmitting( false )
-			setDisabled(true)
-		}, 2000)	
-
-		/*
-		const response = await fetch('https://public-api.solutionscargo.com.mx/save-landing-data', {
-			'method': 'GET',
+		
+		fetch('https://public-api.solutionscargo.com.mx/save-landing-data/', {
+			'method': 'POST',
 			'mode': 'cors',
 			'headers': {
+				'Content-Type': 'application/json',
 				'x-api-key': 'DcLfVaW0q38k0NoVygp8d2QuTYAiftz78kI1XfH1'
-			}
+			},
+			'body': JSON.stringify({
+				name: values.name,
+				email: values.email,
+				message: values.message,
+				phone: values.phone
+			})
 		})
-		const result = await response.json()
-		console.log()*/
+		.then(response => response.json())
+		.then( result => {
+			console.log( result )
+
+			toast.current?.show({severity: 'success', summary: 'Ok', detail: 'Tu información se ha enviado correctamente.'})
+			setSubmitting( false )
+			setDisabled(true)
+		})
+		.catch(err => {
+			console.error( err )
+			toast.current?.show({severity: 'error', summary: 'Error', detail: 'Hubo un error al enviar tu información, por favor vuelva a intentarlo.'})
+			setSubmitting( false )
+		})
 	}
 
 	return (
