@@ -5,6 +5,7 @@ import { useState, useRef, useCallback } from 'react'
 import { InputText } from 'primereact/inputtext'
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
+import { Dropdown } from 'primereact/dropdown';
 import { Toast } from 'primereact/toast';
 import { Formik, Form, ErrorMessage } from 'formik';
 import ReCAPTCHA from "react-google-recaptcha";
@@ -15,10 +16,25 @@ export default function ContactForm() {
 		email: string,
 		phone: string|number,
 		message: string,
+		service: string,
 		captcha: string
 	}
+	interface Service {
+		name: string,
+		value: string
+	}
 
-	const [disabled, setDisabled] = useState<boolean>(false)
+	const [ disabled, setDisabled ] = useState<boolean>(false)
+	const [ service, setService ] = useState<string>('')
+
+	const services: Service[] = [
+		{name: 'Importación aérea', value: 'Importación aérea'},
+		{name: 'Exportación aérea', value: 'Exportación aérea'},
+		{name: 'Importación marítima', value: 'Importación marítima'},
+		{name: 'Transporte terrestre seco', value: 'Transporte terrestre seco'},
+		{name: 'Transporte terrestre refrigerado', value: 'Transporte terrestre refrigerado'},
+		{name: 'Otro', value: 'Otro'},
+	]
 
 	interface RecaptchaRefType {
 		getValue: () => string | null
@@ -33,7 +49,6 @@ export default function ContactForm() {
 
 
 	function validateForm(values: Values) {
-		//const errors: Values = {name: '', email: '', phone: '', message: '', captcha: ''}
 		const errors = {} as Values
 		let count: number = 0
 
@@ -55,7 +70,6 @@ export default function ContactForm() {
 	}
 
 	function submitForm(values: Values, { setSubmitting }: { setSubmitting: Function } ) {
-		
 		fetch('https://public-api.solutionscargo.com.mx/save-landing-data/', {
 			'method': 'POST',
 			'mode': 'cors',
@@ -67,6 +81,7 @@ export default function ContactForm() {
 				name: values.name,
 				email: values.email,
 				message: values.message,
+				service: service,
 				phone: values.phone
 			})
 		})
@@ -89,7 +104,7 @@ export default function ContactForm() {
 		<div className="px-4 md:px-28 py-0 md:py-40 relative">
 			<Toast ref={toast} position="center"/>	
 			<Formik
-				initialValues={{name: '', email: '', message: '', phone: '', captcha: ''}}
+				initialValues={{name: '', email: '', message: '', service: '', phone: '', captcha: ''}}
 				validate={ validateForm }
 				onSubmit={ submitForm }>
 				{({ isSubmitting, values, errors, handleChange }) => (
@@ -113,6 +128,10 @@ export default function ContactForm() {
 							<span className="text-gray-700">Mensaje</span>
 							<InputTextarea className="block w-full" name="message" rows={4} value={values.message} onChange={ handleChange }/>
 							<ErrorMessage name="message" component="div" className="form__error"/>
+						</label>
+						<label className="block form__block">
+							<span className="text-gray-700">Servicio de interés</span>
+							<Dropdown value={service} name="service" onChange={(e) => setService(e.value)} options={services} optionLabel="name" placeholder="Servicios" className="w-full md:w-14rem" />
 						</label>
 						<div className="mt-4 form__recaptcha">
 							<ReCAPTCHA
