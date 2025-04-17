@@ -4,7 +4,7 @@ const path = require('path')
 
 const nextConfig = {
 	output: 'export',
-	basePath: "/out",
+	basePath: "/landing-page-solutionscargo",
 	images: {
 		unoptimized: true
 	}
