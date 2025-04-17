@@ -4,9 +4,8 @@ const path = require('path')
 
 const nextConfig = {
 	output: 'export',
-	reactStrictMode: true,
 	basePath: "/landing-page-solutionscargo",
-	assetPrefix: "/landing-page-solutionscargo/",
+	reactStrictMode: true,
 	images: {
 		unoptimized: true
 	}
