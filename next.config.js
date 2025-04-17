@@ -4,6 +4,7 @@ const path = require('path')
 
 const nextConfig = {
 	output: 'export',
+	basePath: "/out",
 	images: {
 		unoptimized: true
 	}

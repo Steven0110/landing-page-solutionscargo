@@ -29,7 +29,7 @@ export default function SliderSection() {
 	return (
 		<div className="slider grid grid-cols-1">
 			<Slider {...settings}>
-				<div className="slider__slide px-4 md:px-64" style={{backgroundImage: 'url(/bg-perishable.png)'}}>
+				<div className="slider__slide px-4 md:px-64" style={{backgroundImage: 'url(/out/bg-perishable.png)'}}>
 					<div className="slide__title mb-4 md:mb-8 mt-4 md:mt-12">Transporte Refrigerado</div>
 					<div className="slide__text mb-4 md:mb-24 relative">&quot;Expertos en carga perecedera y proyectos agroalimentarios. Coordinamos envíos nacionales e internacionales, y brindamos soporte completo para minimizar riesgos y costos en el transporte de tus productos&quot;</div>
 				</div>
